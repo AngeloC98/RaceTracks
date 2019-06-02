@@ -9,7 +9,7 @@ namespace Racetracks
     {
         protected float radius;
         private Vector2 acceleration = Vector2.Zero;
-        private float drag = 0.99f;
+        public float drag = 0.99f;
         private float invMass = 1.0f; //set indirectly by setting 'mass'
         private float angularVelocity;
         private float angularAcceleration;
@@ -32,8 +32,8 @@ namespace Racetracks
             acceleration = Vector2.Zero;
             velocity *= drag;
 
-            velocity.X = MathHelper.Clamp(velocity.X, -100, 300);
-            velocity.Y = MathHelper.Clamp(velocity.Y, -100, 300);
+            velocity.X = MathHelper.Clamp(velocity.X, -300, 300);
+            velocity.Y = MathHelper.Clamp(velocity.Y, -300, 300);
 
             Angle += angularVelocity;
             angularVelocity += angularAcceleration;

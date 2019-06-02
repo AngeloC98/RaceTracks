@@ -32,11 +32,11 @@ namespace Racetracks
             }
             if (inputHelper.IsKeyDown(Keys.Up))
             {
-                addForce(Forward * 3f);
+                addForce(Forward * 1.1f);
             }
             if (inputHelper.IsKeyDown(Keys.Down))
             {
-                addForce(Forward * -3f);
+                addForce(Forward * -1.1f);
             }
 
         }
