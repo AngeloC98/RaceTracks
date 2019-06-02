@@ -11,7 +11,9 @@ namespace Racetracks
         private Vector2 acceleration = Vector2.Zero;
         private float drag = 0.99f;
         private float invMass = 1.0f; //set indirectly by setting 'mass'
-                
+        private float angularVelocity;
+        private float angularAcceleration;
+
         /// <summary>Creates a physics body</summary>
         public Body(Vector2 position, string assetName) : base(assetName)
         {
@@ -29,6 +31,14 @@ namespace Racetracks
             velocity += acceleration;
             acceleration = Vector2.Zero;
             velocity *= drag;
+
+            velocity.X = MathHelper.Clamp(velocity.X, -100, 300);
+            velocity.Y = MathHelper.Clamp(velocity.Y, -100, 300);
+
+            Angle += angularVelocity;
+            angularVelocity += angularAcceleration;
+            angularAcceleration = 0f;
+            angularVelocity *= drag;
         }
 
         /// <summary>Returns closest point on this shape</summary>        
@@ -97,5 +107,9 @@ namespace Racetracks
             acceleration += force;
         }
         
+        public void addAngularForce(float force)
+        {
+            angularAcceleration += MathHelper.ToRadians(force * 0.05f);
+        }
     }
 }

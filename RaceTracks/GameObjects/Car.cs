@@ -24,11 +24,11 @@ namespace Racetracks
             base.HandleInput(inputHelper);
             if (inputHelper.IsKeyDown(Keys.Left))
             {
-
+                addAngularForce(-1f);
             }
             if (inputHelper.IsKeyDown(Keys.Right))
             {
-
+                addAngularForce(1f);
             }
             if (inputHelper.IsKeyDown(Keys.Up))
             {
