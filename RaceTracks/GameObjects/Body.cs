@@ -9,6 +9,7 @@ namespace Racetracks
     {
         protected float radius;
         private Vector2 acceleration = Vector2.Zero;
+        private float drag = 0.99f;
         private float invMass = 1.0f; //set indirectly by setting 'mass'
                 
         /// <summary>Creates a physics body</summary>
@@ -25,6 +26,9 @@ namespace Racetracks
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            velocity += acceleration;
+            acceleration = Vector2.Zero;
+            velocity *= drag;
         }
 
         /// <summary>Returns closest point on this shape</summary>        
@@ -86,6 +90,11 @@ namespace Racetracks
             {
                 Angle = (float)Math.Atan2(-value.X, value.Y); //polar to angle
             }
+        }
+
+        public void addForce(Vector2 force)
+        {
+            acceleration += force;
         }
         
     }
