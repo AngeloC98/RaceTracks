@@ -10,6 +10,7 @@ namespace Racetracks
         protected float radius;
         private Vector2 acceleration = Vector2.Zero;
         public float drag = 0.99f;
+        public float angularDrag = 0.9f;
         private float invMass = 1.0f; //set indirectly by setting 'mass'
         private float angularVelocity;
         private float angularAcceleration;
@@ -38,7 +39,7 @@ namespace Racetracks
             Angle += angularVelocity;
             angularVelocity += angularAcceleration;
             angularAcceleration = 0f;
-            angularVelocity *= drag;
+            angularVelocity *= angularDrag;
         }
 
         /// <summary>Returns closest point on this shape</summary>        
@@ -109,7 +110,30 @@ namespace Racetracks
         
         public void addAngularForce(float force)
         {
-            angularAcceleration += MathHelper.ToRadians(force * 0.05f);
+            angularAcceleration += MathHelper.ToRadians(force * 0.1f);
+        }
+
+        public void Collision(Body body)
+        {
+            Vector2 normal = position - body.position;
+            normal.Normalize();
+
+            normal *= (position - body.position).Length() - radius - body.radius;
+            velocity -= (normal / 2) * (Mass * invMass);
+            body.velocity += (normal / 2) * (Mass * invMass);
+        }
+
+        public bool CollisionCheck(Body body)
+        {
+            Vector2 normal = position - body.position;
+            float difference = normal.LengthSquared() - ((radius + body.radius) * (radius + body.radius));
+            normal.Normalize();
+            if (difference < 0)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

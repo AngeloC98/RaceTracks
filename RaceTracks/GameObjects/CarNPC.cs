@@ -34,8 +34,9 @@ namespace Racetracks
             Vector2 wpDirection = target - position;
             wpDirection.Normalize();
 
+            float direction = Vector2.Dot(Forward, wpDirection);
             Forward = Vector2.SmoothStep(Forward, wpDirection, steering);
-            addForce(Forward * speed * 2f);
+            addForce(Forward * speed * direction * 5f);
         }
         
     }
